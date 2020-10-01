@@ -22,6 +22,7 @@ export_project.sh
 *.csv.gz
 *.tsv.gz
 *.csv
+newrelic.js
 *newrelic.js
 bin/versions.sh
 version.log

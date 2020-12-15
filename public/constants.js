@@ -453,6 +453,7 @@ constants.PORTALS = {
     'LCW_2018_Bv4','MAA_2018_Bv4','MB_2020_Bv3v4','MO_2018_Bv3v4',
     'MP_2019_Bv3v4','MR_2019_Bv3','MTK_2017_Ev4','MTK_2019_Ev4',
     'PJ_2018_Bv3v4','SK_2020_Bv3v4','SO_2016_Bv4','SO_2016_Ev9','SO_2018_Bv4',
+    'JHS_2020_Bv4v5',
     'SW_2018_Bv4','TH_2014_Bv4','TH_2017_Bv4','XX_2019_Bv3v4'
     ],
    

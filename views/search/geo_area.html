@@ -3,7 +3,7 @@
    integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
    crossorigin=""/>
 <script>
-var accessToken = '<%- token %>'
+  var accessToken = '<%- token %>'
 </script>
 <link rel="stylesheet" type="text/css" href="/stylesheets/search.css">
 
@@ -85,15 +85,18 @@ var accessToken = '<%- token %>'
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier-Leaflet/0.2.6/oms.min.js"></script>
 <script>
 		var mapOptions = {          
-          id: 'mapbox.streets',
+          id: 'mapbox/streets-v11',
           accessToken: accessToken
         };
 		var mymap = L.map('mapid').setView([0, 0], 2) 
-		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',mapOptions).addTo(mymap); 
+		L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',mapOptions).addTo(mymap); 
+        
         var oms = new OverlappingMarkerSpiderfier(mymap);
 		//$(document).ready(function(){
 		initMap({})
 		//});
 </script>
+
+
 </body>
 </html>

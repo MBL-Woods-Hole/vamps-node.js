@@ -34,11 +34,11 @@ function create_geospatial(){
     }else{
        
         var mapOptions = {         
-          id: 'mapbox.streets-basic',
+          id: 'mapbox/streets-v11',
           accessToken: token
         };
         var mymap = L.map('mapid').setView([41.5257, -70.672], 3)
-        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',mapOptions).addTo(mymap); 
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',mapOptions).addTo(mymap); 
 
         setMarkers(mymap, loc_data, pid_collector);
     }

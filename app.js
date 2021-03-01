@@ -337,6 +337,9 @@ all_silva_taxonomy.get_all_taxa(function(err, results) {
             console.log('Could not get sizeof(constants.new_taxonomy) in app.js; Exiting')
             process.exit()
         }
+        for(var item in C.new_taxonomy){
+          //console.log(item)
+        }
         // uncomment to print out the object:
         //console.log('000 new_taxonomy = ' + JSON.stringify(new_taxonomy));
         //

@@ -1,6 +1,7 @@
 const express = require('express');
 var router = express.Router();
 const spawn = require('child_process').spawn;
+var request = require('request');
 const C		  = require(app_root + '/public/constants');
 // These are all under /help
 
@@ -51,48 +52,64 @@ router.post('/contact', (req, res) => {
         res.redirect('/help/contact')
         return
     }
+    const secretKey = req.CONFIG.reCAPTCHA_secret_key;  //MOVED TO CONFIG!!!!
+    var token = req.body.token
+    var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + token;
     var mailOptions = {
         scriptPath : req.CONFIG.PATH_TO_NODE_SCRIPTS,
         args :       [ '-to', req.CONFIG.CONTACT_EMAIL, '-from', req.body.email, '-name', '"'+req.body.name+'"', '-sub', '"'+req.body.subject+'"', '-msg', '"'+msg+'"' ],
     };
     console.log(mailOptions.scriptPath+'/send_email.py '+mailOptions.args.join(' '))
-    var mail_process = spawn( mailOptions.scriptPath+'/send_email.py', mailOptions.args, {
-                env:{'PATH':req.CONFIG.PATH,'LD_LIBRARY_PATH':req.CONFIG.LD_LIBRARY_PATH},
-                detached: true, 
-                //stdio: [ 'ignore', null, log ]
-                stdio: 'pipe'  // stdin, stdout, stderr,'pipe'
-    }); 
+    request(verificationUrl,function(error,response,body) {
+    	body = JSON.parse(body);
+    	console.log('body')
+    	console.log(body)
+    	// Success will be true or false depending upon captcha validation.
+    	if(body.success !== undefined && !body.success) {
+      		return res.json({"responseCode" : 1,"responseDesc" : "Failed captcha verification"});
+    	}
+    	
+    	
+    	//res.json({"responseCode" : 0,"responseDesc" : "Sucess"});
+    	
+    
+		var mail_process = spawn( mailOptions.scriptPath+'/send_email.py', mailOptions.args, {
+					env:{'PATH':req.CONFIG.PATH,'LD_LIBRARY_PATH':req.CONFIG.LD_LIBRARY_PATH},
+					detached: true, 
+					//stdio: [ 'ignore', null, log ]
+					stdio: 'pipe'  // stdin, stdout, stderr,'pipe'
+		}); 
    
-    stdout = '';
-    mail_process.stdout.on('data', data => {
-        
-        //console.log(data.toString('utf8'))
-        stdout += data;    
-     
-    });
-    stderr = '';
-    mail_process.stderr.on('data', data => {
-        
-        console.log(data.toString('utf8'))
-        stderr += data;    
-     
-    });
-    mail_process.on('close', code => {
-        console.log('mail_process process exited with code ' + code);
-        if(code == 0){           
-            //res.send(stdout);  
-            req.flash('success', 'messege sent');
-                                     
-        }else{
-          console.log('python script error: '+stderr);
-          req.flash('fail', 'problem with mail delivery');
-          //res.send(stderr); 
-        } 
-        res.redirect('/help/contact')
-        return       
-     });   
+		stdout = '';
+		mail_process.stdout.on('data', data => {
+		
+			//console.log(data.toString('utf8'))
+			stdout += data;    
+	 
+		});
+		stderr = '';
+		mail_process.stderr.on('data', data => {
+		
+			console.log(data.toString('utf8'))
+			stderr += data;    
+	 
+		});
+		mail_process.on('close', code => {
+			console.log('mail_process process exited with code ' + code);
+			if(code == 0){           
+				//res.send(stdout);  
+				req.flash('success', 'messege sent');
+									 
+			}else{
+			  console.log('python script error: '+stderr);
+			  req.flash('fail', 'problem with mail delivery');
+			  //res.send(stderr); 
+			} 
+			res.redirect('/help/contact')
+			return       
+		 });   
 
-
+  });  // end reCAPTCHA
     
 });
 

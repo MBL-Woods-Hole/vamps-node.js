@@ -160,6 +160,7 @@ function TaxonomyTree(rows) {
 
 TaxonomyTree.prototype.make_dict = (tree_obj, key_name) => {
   let new_dict = {};
+  console.log('in TT prottype')
   for (let i = 0; tree_obj.length > i; i += 1) {
     new_dict[tree_obj[i][key_name]] = tree_obj[i];
   }

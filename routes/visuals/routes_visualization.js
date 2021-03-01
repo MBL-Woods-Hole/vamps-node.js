@@ -1846,7 +1846,7 @@ function get_options_by_node(node) {
 // test: choose custom taxonomy, show tree
 router.get('/tax_custom_dhtmlx', (req, res) => {
   // console.time("TIME: tax_custom_dhtmlx");
-  //console.log('IN tax_custom_dhtmlx')
+  console.log('IN tax_custom_dhtmlx')
   let myurl = url.parse(req.url, true);
   let id = myurl.query.id;
 

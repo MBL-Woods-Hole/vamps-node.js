@@ -400,6 +400,10 @@ module.exports.isValidIdSelector = function (str) {
 //   return (reg.test(username));
 // };
 
+// to use:
+// array.sort(function sortByName(a, b) {
+//                 return helpers.compareStrings_alpha(a.name, b.name);
+//     });
 module.exports.compareStrings_alpha = (a, b) => {
   // Assuming you want case-insensitive comparison
   a = a.toLowerCase();

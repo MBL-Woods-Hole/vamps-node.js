@@ -1,5 +1,5 @@
 var assert = require('assert'),
-test = require('selenium-webdriver/testing'),
+test = require('selenium-webdriver/chrome'),
 webdriver = require('selenium-webdriver');
 
 // test.describe('Google Search', function() {

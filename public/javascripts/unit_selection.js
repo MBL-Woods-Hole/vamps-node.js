@@ -266,7 +266,7 @@ function load_generic_tax_simple() {
       xmlhttp1.send();
 }
 function load_custom_tax_tree() {
-      
+      //alert(custom_selection)
       switch(custom_selection){
 
         case 'html':

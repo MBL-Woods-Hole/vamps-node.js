@@ -1,13 +1,13 @@
 <% menu_section='CONTACT' %>
 <% include ../add_ins/begin.ejs %>
-
+<% public_key = '6Lf9BG0aAAAAALyXXbfgnLpi2kKaBdNPL5b1RlNd' %>
 <% if (messages.success) { %>
   	<div class="alert_flash_message_success"><%= messages.success %></div>
 <% }else if(messages.fail){ %>
     <div class="alert_flash_message_fail"><%= messages.fail %></div>
 <% } %>
 
-<script src="https://www.google.com/recaptcha/api.js?render=6Lf9BG0aAAAAALyXXbfgnLpi2kKaBdNPL5b1RlNd"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=<%= public_key %>"></script>
 <div class="title fa fa-anchor">Contact Us</div>
 
 <div class="row">
@@ -33,11 +33,11 @@ Before sending this email have you read through the <a href='FAQ' target='_blank
 
 	  <div class="form-group">
 	    <label for="contact-form-mail">Email address</label>
-	    <input type="email" class="form-control" name='email' id="InputEmail1" placeholder="enter email" value='<%- valemail %>' >
+	    <input type="email" class="form-control" name='email' id="contact-form-email" placeholder="enter email" value='<%- valemail %>' >
 	  </div>
 	  <div class="form-group">
 	    <label for="contact-form-subject">Subject</label>
-	      <select name='subject' >
+	      <select id='contact-form-subject' name='subject' >
 				  <option>Select</option>
 				  <% for(i in choices){ %>
 				  <option><%= choices[i] %></option>
@@ -76,19 +76,20 @@ $(document).ready(function(){
  $("#submit-button").click(function(){
   
   $.post("contact",{
-   email: $("#InputEmail1").val(),
+   email: $("#contact-form-email").val(),
    name: $("#contact-form-name").val(),
    message: $("#contact-form-message").val(),
+   subject: $("#contact-form-subject").val(),
    token: myToken
   },function(res){
-    console.log(res);
+      console.log(res);
   });
  });
  
  grecaptcha.ready(function() {
   // do request for recaptcha token
   // response is promise with passed token
-  grecaptcha.execute('6Lf9BG0aAAAAALyXXbfgnLpi2kKaBdNPL5b1RlNd')
+  grecaptcha.execute('<%= public_key %>')
   .then(function(token) {
     // add token value to form
     myToken = token;

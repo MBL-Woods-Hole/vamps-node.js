@@ -68,11 +68,8 @@ router.post('/contact', (req, res) => {
     	if(body.success !== undefined && !body.success) {
       		return res.json({"responseCode" : 1,"responseDesc" : "Failed captcha verification"});
     	}
+    	console.log({"responseCode" : 0,"responseDesc" : "Sucess"});
     	
-    	
-    	//res.json({"responseCode" : 0,"responseDesc" : "Sucess"});
-    	
-    
 		var mail_process = spawn( mailOptions.scriptPath+'/send_email.py', mailOptions.args, {
 					env:{'PATH':req.CONFIG.PATH,'LD_LIBRARY_PATH':req.CONFIG.LD_LIBRARY_PATH},
 					detached: true, 
